@@ -7,6 +7,7 @@ const { ExpressOIDC } = require('@okta/oidc-middleware');
 
 const app = express();
 const port = process.env.PORT || 5000;
+const createError = require('http-errors');
 
 
 // Parse queries and parameters.
@@ -58,6 +59,10 @@ app.get('/express_backend', (req, res) => {
 });
 
 app.use(express.static("client/build", {index: false}));
+
+// Connect the API
+app.use('/api/v1', require('./api/v1/index'));
+app.use('/api', (req, res, next) => next(createError(404, "You must specify a valid API version. Ex: `/api/v1`.")));
 
 // For any other request, let React handle it.
 app.use((req, res) => {

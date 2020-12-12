@@ -1,0 +1,74 @@
+openapi: 3.0.0
+
+info:
+  version: 0.1.0
+  title: Example React with Auth App API
+  description: The API for my example react with auth app
+  contact:
+    name: Devon Henegar
+    email: devon.henegar@gmail.com
+    url:  TBD
+
+servers:
+  - url: /api/v1
+
+tags:
+  - name: API
+
+paths:
+  /info:
+    get:
+      operationId: getApiInfo
+      summary: Get basic information about the API.
+      tags: [API]
+      responses:
+        200:
+          description: General information about the api.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: a generic welcome message.
+                  apiVersion:
+                    type: string
+                    description: Current version of the API ("V1").
+                  apiBaseUrl:
+                    type: string
+                    description: Base URL which should be appended to all other API requests.
+        401:
+          $ref: "#/components/responses/unauthorized"
+
+  /spec:
+    get:
+      operationId: getApiSpec
+      summary: Get the API specification or Swagger UI.
+      tags: [API]
+      responses:
+        200:
+          description: Either the Swagger UI or raw specification, depending on `Accept` header.
+          content:
+            text/html:
+              schema:
+                description: A Swagger UI for the API spec.
+            application/json:
+              schema:
+                description: The API spec in JSON format.
+            application/yaml:
+              schema:
+                description: The API spec in YAML format.
+        401:
+          $ref: "#/components/responses/unauthorized"
+        501:
+          description: API Spec not yet available in the requested format.
+
+components:
+  responses:
+    unauthorized:
+      description: Not yet implemented - You are not logged in.
+    forbidden:
+      description: Not yet implemented - You don't have permissions to make this request.
+    notFound:
+      description: The requested target was not found.
