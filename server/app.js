@@ -9,6 +9,13 @@ const app = express();
 const port = process.env.PORT || 5000;
 const createError = require('http-errors');
 
+const {initCouch} = require('./classes/couchdb');
+const User = require('./classes/User');
+
+
+initCouch()
+  .then(() => console.log('couchdb initialized'));
+
 
 // Parse queries and parameters.
 const PAYLOAD_LIMIT = '5mb';
@@ -51,6 +58,14 @@ oidc.on('ready', () => {
 oidc.on('error', err => {
   console.error('Got an error with OIDC.');
   console.error(err);
+});
+
+app.get('/profile', (req, res) => {
+  const {userContext} = req;
+
+  User.loadOrCreateUser(userContext.userinfo)
+    .then(user => res.json(user))
+    .catch(error => console.log(error));
 });
 
 // Create a GET route  TODO get rid of this once proper api is set up.
