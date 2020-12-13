@@ -9,7 +9,6 @@ router.get("/me", whoAmI);
 
 
 function whoAmI(req, res, next) {
-  console.log('in WHOAMI');
   const {user} = req;
 
   // TODO throw a big ol' error if we don't have a user.
