@@ -12,7 +12,7 @@ module.exports = {
     }
   },
 
-  "extends": ["eslint:recommended"],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
 
   "rules": {
     // //////// Possible Errors //////////
