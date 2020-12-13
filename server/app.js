@@ -60,11 +60,13 @@ oidc.on('error', err => {
   console.error(err);
 });
 
-app.get('/profile', (req, res) => {
+app.use((req, res, next) => {
   const {userContext} = req;
-
   User.loadOrCreateUser(userContext.userinfo)
-    .then(user => res.json(user))
+    .then(user => {
+      req.user = user;
+      next();
+    })
     .catch(error => console.log(error));
 });
 
@@ -73,11 +75,13 @@ app.get('/express_backend', (req, res) => {
   res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
 });
 
-app.use(express.static("client/build", {index: false}));
-
 // Connect the API
 app.use('/api/v1', require('./api/v1/index'));
 app.use('/api', (req, res, next) => next(createError(404, "You must specify a valid API version. Ex: `/api/v1`.")));
+
+
+app.use(express.static("client/build", {index: false}));
+
 
 // For any other request, let React handle it.
 app.use((req, res) => {

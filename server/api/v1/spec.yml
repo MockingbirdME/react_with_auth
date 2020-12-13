@@ -64,6 +64,21 @@ paths:
         501:
           description: API Spec not yet available in the requested format.
 
+  /users/me:
+    get:
+      operationId: whoAmI
+      summary: Get the authenticated user's data.
+      tags: [API, User]
+      responses:
+        200:
+          description: The user's data.
+          content:
+            $ref: "#/components/schemas/User"
+        401:
+          $ref: "#/components/responses/unauthorized"
+        501:
+          description: API Spec not yet available in the requested format.
+
 components:
   responses:
     unauthorized:
@@ -72,3 +87,47 @@ components:
       description: Not yet implemented - You don't have permissions to make this request.
     notFound:
       description: The requested target was not found.
+
+schemas:
+    User:
+      type: object
+      description: Information about a user.
+      properties:
+        id:
+          readOnly: true
+          description: The unique ID of the user, set from otkaInfo.sub.
+          type: string
+        name:
+          type: string
+          description: The prefered name of the user, defaults to otkaInfo.name.
+          example: John Doe
+        otkaInfo:
+          type: object
+          readOnly: true
+          description: A map of the character's base attribute bonuses and penalties.
+          properties:
+            sub:
+              description: The unique Otka subscription ID of the user.
+              type: string
+            name:
+              type: string
+              description: The prefered name of the user, defaults to otkaInfo.name.
+              example: John Doe
+            locale:
+              type: string
+              description: Otka listed location of the user.
+            preferred_username:
+              type: string
+              description: The Otka username, usually the email they signed up with.
+            given_name:
+              type: string
+              description: The first name the user gave Otka.
+            family_name:
+              type: string
+              description: The family name the user gave Otka.
+            zoneinfo:
+              type: string
+              description: The Otka determined zone of the user.
+            updated_at:
+              type: integer
+              description: The timestamp their Otka account was last updated at.

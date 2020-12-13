@@ -24,6 +24,11 @@ router.get("/spec", (req, res, next) => {
     next(createError(501, "API Spec not yet available in the requested format."));
 });
 
+router.use((req, res, next) => {console.log('before users'); next();})
+
+// Use the users.js endpoints for all user or users calls.
+router.use('/users?', require('./users'));
+
 // Return a 404 error if the endpoint doesn't exist.
 router.use((req, res, next) => next(createError(404, `No API found for method: ${req.method}, at endpoint: ${req.url}`)));
 
