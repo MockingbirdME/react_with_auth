@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {UserContextProvider} from "./contexts/user";
 
 class App extends Component {
-state = {
+  state = {
     data: null
   };
 
@@ -19,21 +20,23 @@ state = {
     const body = await response.json();
 
     if (response.status !== 200) {
-      throw Error(body.message) 
+      throw Error(body.message)
     }
     return body;
   };
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        {/* Render the newly fetched data inside of this.state.data */ }
-        <p className="App-intro">{this.state.data}</p>
-      </div>
+      <UserContextProvider>
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Welcome to React</h1>
+          </header>
+          {/* Render the newly fetched data inside of this.state.data */ }
+          <p className="App-intro">{this.state.data}</p>
+        </div>
+      </UserContextProvider>
     );
   }
 }
