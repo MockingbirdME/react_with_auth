@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import UserContext from "../contexts/user";
 
 
-const User = props => {
+const User = () => {
   const userContext = useContext(UserContext);
   const {user} = userContext;
   if (!user || !user.name) return <div></div>;

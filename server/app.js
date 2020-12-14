@@ -9,12 +9,12 @@ const app = express();
 const port = process.env.PORT || 5000;
 const createError = require('http-errors');
 
-const {initCouch} = require('./classes/couchdb');
+// const {initCouch} = require('./classes/couchdb');
 const User = require('./classes/User');
 
 
-initCouch()
-  .then(() => console.log('couchdb initialized'));
+// initCouch()
+//   .then(() => console.log('couchdb initialized'));
 
 
 // Parse queries and parameters.

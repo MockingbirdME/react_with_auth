@@ -1,7 +1,22 @@
 const util = require('util');
 const deepEqual = require('deep-equal')
 
-const database = require('./couchdb').couch.use('users');
+// const database = require('./couchdb');
+const Cloudant = require('./Cloudant');
+
+const database = new Cloudant({name: 'user'});
+
+database.exists()
+  .then(async exists => {
+    if (exists) return console.log(`User database exists`);
+    console.log('Creating User database.');
+    await database.create();
+  })
+  .catch(error => {
+    console.error(`Unable to validate or create User database`);
+    console.error(error);
+    throw error;
+  })
 
 class User {
 

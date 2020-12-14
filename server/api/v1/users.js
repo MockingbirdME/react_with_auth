@@ -1,8 +1,6 @@
 const express = require("express");
 const createError = require("http-errors");
 
-const User = require("../../classes/User");
-
 const router = express.Router();
 
 router.get("/me", whoAmI);

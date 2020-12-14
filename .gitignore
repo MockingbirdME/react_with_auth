@@ -20,3 +20,4 @@ yarn-error.log*
 
 # local credentials
 .env
+vcap*
