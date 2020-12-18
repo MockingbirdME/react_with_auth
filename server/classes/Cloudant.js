@@ -5,7 +5,7 @@ var CLOUDANT = require('@cloudant/cloudant');
 
 // Initialize Cloudant with settings from .env
 const {CLOUDANT_URL, CLOUDANT_IAM_API_KEY} = process.env;
-console.log(process.env);
+
 var cloudant = CLOUDANT({ url: CLOUDANT_URL, maxAttempt: 5, plugins: [ { iamauth: { iamApiKey: CLOUDANT_IAM_API_KEY } }, { retry: { retryDelayMultiplier: 4 } } ]});
 // Using the async/await style.
 

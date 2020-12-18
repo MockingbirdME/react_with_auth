@@ -24,7 +24,6 @@ app.use(express.urlencoded({extended: false, limit: PAYLOAD_LIMIT}));
 
 // Load the Okta private variaibles. NOTE: This will not work in production, update it to load the properties correctly there.
 const {ISSUER, CLIENT_ID, CLIENT_SECRET, APP_BASE_URL = 'http://localhost:5000'} = process.env;
-console.log(process.env);
 
 const oidc = new ExpressOIDC({
   issuer: ISSUER,
@@ -52,10 +51,10 @@ app.get('/logout', oidc.forceLogoutAndRevoke(), (req, res) => {
 
 // Wait for OICD to be ready before the app listens on its set port.
 oidc.on('ready', () => {
-  app.listen(port, () => console.log('app started'));
+  app.listen(port, () => console.log('app started, listening on port:', port));
 });
 
-// Handle errors that occurr while setting up OIDC, during token revokation, or during post-logout handling
+// Handle errors that occur while setting up OIDC, during token revokation, or during post-logout handling
 oidc.on('error', err => {
   console.error('Got an error with OIDC.');
   console.error(err);
