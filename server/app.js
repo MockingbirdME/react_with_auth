@@ -23,13 +23,14 @@ app.use(express.json({limit: PAYLOAD_LIMIT}));
 app.use(express.urlencoded({extended: false, limit: PAYLOAD_LIMIT}));
 
 // Load the Okta private variaibles. NOTE: This will not work in production, update it to load the properties correctly there.
-const {ISSUER, CLIENT_ID, CLIENT_SECRET} = process.env;
+const {ISSUER, CLIENT_ID, CLIENT_SECRET, APP_BASE_URL = 'http://localhost:5000'} = process.env;
+console.log(process.env);
 
 const oidc = new ExpressOIDC({
   issuer: ISSUER,
   client_id: CLIENT_ID,
   client_secret: CLIENT_SECRET,
-  appBaseUrl: 'http://localhost:5000',
+  appBaseUrl: APP_BASE_URL,
   scope: 'openid profile'
 });
 
