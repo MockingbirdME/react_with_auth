@@ -80,7 +80,10 @@ app.use('/api/v1', require('./api/v1/index'));
 app.use('/api', (req, res, next) => next(createError(404, "You must specify a valid API version. Ex: `/api/v1`.")));
 
 
-app.use(express.static("client/build", {index: false}));
+// app.use(express.static("client/build", {index: false}));
+// Priority serve any static files.
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+
 
 
 // For any other request, let React handle it.
