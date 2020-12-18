@@ -85,5 +85,5 @@ app.use(express.static("client/build", {index: false}));
 
 // For any other request, let React handle it.
 app.use((req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
