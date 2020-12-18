@@ -48,6 +48,7 @@ class Cloudant {
       .then(info => {return true;})
       .catch(error => {
         if (error.statusCode === 404) return false;
+        console.error('error checking database info');
         throw error;
       });
   }
